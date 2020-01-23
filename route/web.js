@@ -1,5 +1,7 @@
-const notes = require('../controllers/note.controller.js');
 const Auth = require("../middleware/auth")
+
+const notes = require('../controllers/note.controller.js');
+const user = require('../controllers/user.controller.js');
 
 module.exports = function (app) {
 
@@ -9,7 +11,9 @@ module.exports = function (app) {
         })
     });
 
-    // Note Routes;
+    app.post('/register', user.register);
+    app.post('/login', user.login);
+
     app.post('/notes', notes.create);
     app.get('/notes', Auth.auth, notes.findAll);
     app.get('/notes/:id', notes.findOne);

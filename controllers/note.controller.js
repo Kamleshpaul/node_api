@@ -1,9 +1,9 @@
 const Note = require('../models/note.model.js');
 
 // Create and Save a new Note
-exports.create = (req, res) => { // Validate request
+exports.create = (req, res) => {
     if (!req.body.content) {
-        return res.status(400).send({message: "Note content can not be empty"});
+        return res.status(400).send({ message: "Note content can not be empty" });
     }
 
     // Create a Note
@@ -58,14 +58,14 @@ exports.findOne = (req, res) => {
 // Update a note identified by the id in the request
 exports.update = (req, res) => { // Validate Request
     if (!req.body.content) {
-        return res.status(400).send({message: "Note content can not be empty"});
+        return res.status(400).send({ message: "Note content can not be empty" });
     }
 
     // Find note and update it with the request body
     Note.findByIdAndUpdate(req.params.id, {
         title: req.body.title || "Untitled Note",
         content: req.body.content
-    }, {new: true}).then(note => {
+    }, { new: true }).then(note => {
         if (!note) {
             return res.status(404).send({
                 message: "Note not found with id " + req.params.id
@@ -92,7 +92,7 @@ exports.delete = (req, res) => {
                 message: "Note not found with id " + req.params.id
             });
         }
-        res.send({message: "Note deleted successfully!"});
+        res.send({ message: "Note deleted successfully!" });
     }).catch(err => {
         if (err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({
